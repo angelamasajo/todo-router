@@ -5,10 +5,6 @@ const cors = require("cors");
 const helmet = require("helmet");
 const { NODE_ENV } = require("./config");
 const errorHandler = require("./middleware/error-handler");
-const TodoService = require("./todo/todo-service");
-const xss = require("xss");
-const jsonParser = express.json();
-const path = require("path");
 const TodoRouter = require ('./todo/todo-router')
 
 const app = express();
@@ -28,6 +24,7 @@ app.use(express.static("public"));
 app.get('/v1', (req, res) => {
   res.json({ ok: true })
 })
+
 app.use('/v1/todos', TodoRouter);
 
 app.use(errorHandler);

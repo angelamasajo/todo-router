@@ -2,6 +2,7 @@ const path = require('path');
 const express = require('express');
 const TodoService = require('./todo-service');
 const app = require('../app')
+const xss = require('xss')
 
 const TodoRouter = express.Router();
 const jsonParser = express.json();
@@ -13,12 +14,12 @@ const serializeTodo = (todo) => ({
 });
 
 TodoRouter
-  .route("/v1/todos")
+  .route("/")
   .get((req, res, next) => {
     const knexInstance = req.app.get("db");
     TodoService.getTodos(knexInstance)
       .then((todos) => {
-        res.json(todos.map(serializeTodo));
+        res.json(todos);
       })
       .catch(next);
   })
@@ -45,7 +46,7 @@ TodoRouter
   });
 
 TodoRouter
-  .route("/v1/todos/:todo_id")
+  .route("/:todo_id")
   .all((req, res, next) => {
     if (isNaN(parseInt(req.params.todo_id))) {
       return res.status(404).json({

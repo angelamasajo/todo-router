@@ -2,10 +2,10 @@ const TodoService = {
   getTodos(db) {
     return db
       .from('todo')
-      .select(
-        'todo.id',
-        'todo.title',
-        'todo.completed',
+      .select('*'
+        // 'todo.id',
+        // 'todo.title',
+        // 'todo.completed',
       )
   },
   getTodoById(db, todo_id) {
